@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Tabular';
+            src: url('assets/Tabular-Variable.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <link rel="stylesheet" href="onboarding-styles.css">
+</head>
+<body>
+    <div id="onboarding-container">
+        <div id="onboarding-canvas-container"></div>
+        <video id="onboarding-video"></video>
+
+        <div id="menu-overlay" class="menu-overlay" style="display: none;">
+            <div id="menu-text-volume" class="menu-text">VOLUME</div>
+            <div id="menu-text-space" class="menu-text">SPACE</div>
+            <div id="menu-text-direction" class="menu-text">DIRECTION</div>
+        </div>
+
+        <div id="hand-positioning-overlay" class="positioning-overlay" style="display: none;">
+            <div class="positioning-content">
+                <div class="positioning-icon">⚠️</div>
+                <div class="positioning-text">KEEP HANDS PARALLEL TO SCREEN</div>
+                <div class="positioning-subtext">Adjust hand angle for better tracking</div>
+            </div>
+        </div>
+
+                <div class="onboarding-content">
+            <div class="onboarding-header">
+                <img src="assets/logo.svg" alt="Arkade Logo" class="onboarding-logo">
+                <span class="onboarding-title">ARKADE</span>
+                <button id="onboarding-language-toggle" class="language-toggle">EN</button>
+            </div>
+
+            <div class="onboarding-center">
+            <div class="onboarding-card">
+                <div class="onboarding-hands">
+                        <div id="left-hand-icon" class="hand-icon left-hand">
+                            <img src="assets/left-palm.svg" alt="Left hand">
+                        </div>
+                        <div id="right-hand-icon" class="hand-icon right-hand">
+                            <img src="assets/right-palm.svg" alt="Right hand">
+                        </div>
+                    </div>
+                    <div id="onboarding-text" class="onboarding-text">SHOW YOUR HANDS TO THE CAMERA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="onboarding-app.js"></script>
+</body>
+</html> 

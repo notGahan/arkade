@@ -1,0 +1,292 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+#onboarding-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#onboarding-canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#onboarding-video {
+    display: none;
+}
+
+.onboarding-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 40px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.onboarding-content > * {
+    pointer-events: auto;
+}
+
+.onboarding-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+}
+
+.onboarding-logo {
+    width: 60px;
+    height: auto;
+}
+
+.onboarding-title {
+    font-family: 'Tabular', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    color: #ffffff;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+.language-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    letter-spacing: 0;
+    min-width: 40px;
+}
+
+.language-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.language-toggle:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.onboarding-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onboarding-card {
+    background-color: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 480px;
+    box-sizing: border-box;
+}
+
+.onboarding-hands {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.hand-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.hand-icon.left-instruction {
+    width: 50px;
+    height: 50px;
+}
+
+.hand-icon.left-instruction img {
+    opacity: 1;
+    filter: brightness(0) saturate(100%) invert(26%) sepia(52%) saturate(1572%) hue-rotate(295deg) brightness(95%) contrast(89%);
+}
+
+.hand-icon.lottie-instruction {
+    width: 100px;
+    height: 100px;
+}
+
+.hand-icon img {
+    width: 100%;
+    height: auto;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
+
+.hand-icon.left-hand.detected img {
+    opacity: 1;
+    filter: brightness(0) saturate(100%) invert(26%) sepia(52%) saturate(1572%) hue-rotate(295deg) brightness(95%) contrast(89%);
+}
+
+.hand-icon.right-hand.detected img {
+    opacity: 1;
+    filter: brightness(0) saturate(100%) invert(23%) sepia(78%) saturate(2234%) hue-rotate(253deg) brightness(90%) contrast(97%);
+}
+
+.onboarding-text {
+    font-family: 'Tabular', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    margin: 0;
+    width: 100%;
+    word-wrap: break-word;
+    line-height: 1.6;
+}
+
+.onboarding-text.success {
+    opacity: 1;
+}
+
+
+
+.positioning-overlay {
+    position: fixed;
+    top: 90px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.95), rgba(255, 193, 7, 0.95));
+    color: #333;
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    max-width: 90%;
+    text-align: center;
+    border: 2px solid rgba(255, 152, 0, 0.8);
+    backdrop-filter: blur(10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.positioning-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.positioning-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+    animation: pulse 2s infinite;
+}
+
+.positioning-text {
+    font-family: 'Tabular', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.positioning-subtext {
+    font-family: 'Tabular', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+}
+
+.menu-text {
+    position: absolute;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #160e0c;
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: 1px solid #fa623c;
+    text-align: center;
+    align-items: center;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease;
+    user-select: none;
+    letter-spacing: 0.4em;
+}
+
+.menu-text.selected {
+    border-color: #fa623c;
+    border-width: 1px;
+    background-color: #fa623c;
+    color: #8c2e17;
+}
+
+.menu-text.current-mode {
+    border-color: #fa623c;
+    border-width: 1px;
+    background-color: #8f3c27;
+    color: #ffffff;
+}
+

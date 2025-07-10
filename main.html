@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Tabular';
+            src: url('assets/Tabular-Variable.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="canvas-container"></div>
+        <video id="video"></video>
+
+
+                        <div class="app-header">
+            <img src="assets/logo.svg" alt="Arkade Logo" class="app-logo">
+            <span class="app-title">ARKADE</span>
+        </div>
+
+
+                        <div id="hand-positioning-overlay" class="positioning-overlay" style="display: none;">
+            <div class="positioning-content">
+                <div class="positioning-icon">⚠️</div>
+                <div class="positioning-text">KEEP HANDS PARALLEL TO SCREEN</div>
+                <div class="positioning-subtext">Adjust hand angle for better tracking</div>
+            </div>
+        </div>
+
+
+                        <div id="menu-overlay" class="menu-overlay" style="display: none;">
+            <div id="menu-text-volume" class="menu-text">VOLUME</div>
+            <div id="menu-text-space" class="menu-text">SPACE</div>
+            <div id="menu-text-direction" class="menu-text">DIRECTION</div>
+        </div>
+
+
+                        <div id="volume-instruction-card" class="onboarding-bottom" style="display: none;">
+            <div class="onboarding-card">
+                <div class="onboarding-hands">
+                    <div id="volume-lottie-animation" class="hand-icon lottie-instruction">
+
+                                            </div>
+                </div>
+                <div class="onboarding-text">PINCH USING BOTH HANDS AND SPREAD TO CONTROL VOLUME</div>
+            </div>
+        </div>
+
+                        <div id="spacey-instruction-card" class="onboarding-bottom" style="display: none;">
+            <div class="onboarding-card">
+                <div class="onboarding-hands">
+                    <div id="spacey-lottie-animation" class="hand-icon lottie-instruction">
+
+                                            </div>
+                </div>
+                <div class="onboarding-text">PINCH USING BOTH HANDS AND SPREAD TO CONTROL SPACE</div>
+            </div>
+        </div>
+
+                        <div id="direction-instruction-card" class="onboarding-bottom" style="display: none;">
+            <div class="onboarding-card">
+                <div class="onboarding-hands">
+                    <div id="direction-lottie-animation" class="hand-icon lottie-instruction">
+
+                                            </div>
+                </div>
+                <div class="onboarding-text">POINT ONLY WITH LEFT HAND TO CONTROL DIRECTION</div>
+            </div>
+        </div>
+
+
+
+
+                        <div id="info-cards">
+
+                        <div id="volume-card" class="info-card">
+                <div class="card-content">
+                    <div class="card-label">VOLUME</div>
+                    <div class="progress-container">
+                        <div class="progress-background">
+                            <div id="volume-progress" class="progress-bar">
+                                <span id="volume-value" class="progress-text">50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                        <div id="space-card" class="info-card">
+                <div class="card-content">
+                    <div class="card-label">SPACE</div>
+                    <div class="progress-container">
+                        <div class="progress-background">
+                            <div id="space-progress" class="progress-bar">
+                                <span id="space-value" class="progress-text">50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                        <div id="direction-card" class="info-card">
+                <div class="card-content">
+                    <div class="card-label">DIRECTION</div>
+                    <div class="panning-container">
+                        <div class="panning-background">
+                            <div class="panning-labels">
+                                <span class="panning-label-left">L</span>
+                                <span class="panning-label-center">CENTRE</span>
+                                <span class="panning-label-right">R</span>
+                            </div>
+                            <div id="panning-indicator" class="panning-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                                    <div id="volume-menu-instruction" class="mode-instruction" style="display: none;">
+                <div class="instruction-content">
+                    <div class="instruction-row">
+                        <div class="instruction-icon-container">
+                            <img src="assets/left.svg" alt="Right hand" class="instruction-icon">
+                        </div>
+                        <span class="instruction-text">PINCH AND HOLD ON LEFT HAND FOR MENU</span>
+                    </div>
+                </div>
+            </div>
+
+                                    <div id="spacey-menu-instruction" class="mode-instruction" style="display: none;">
+                <div class="instruction-content">
+                    <div class="instruction-row">
+                        <div class="instruction-icon-container">
+                            <img src="assets/left.svg" alt="Right hand" class="instruction-icon">
+                        </div>
+                        <span class="instruction-text">PINCH AND HOLD ON LEFT HAND FOR MENU</span>
+                    </div>
+                </div>
+            </div>
+
+                                    <div id="direction-menu-instruction" class="mode-instruction" style="display: none;">
+                <div class="instruction-content">
+                    <div class="instruction-row">
+                        <div class="instruction-icon-container">
+                            <img src="assets/left.svg" alt="Right hand" class="instruction-icon">
+                        </div>
+                        <span class="instruction-text">PINCH AND HOLD ON LEFT HAND FOR MENU</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        
+        <div id="controls">
+            <button id="play-button">Play</button>
+            <button id="stop-button">Stop</button>
+            <button id="calibrate">Calibrate</button>
+            <button id="language-toggle" class="language-toggle">EN</button>
+        </div>
+
+
+            </div>
+
+
+        <script type="module" src="main.js"></script>
+</body>
+</html> 
